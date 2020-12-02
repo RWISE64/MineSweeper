@@ -2,6 +2,13 @@ import React from 'react';
 import Square from '../square/square';
 import './field.css';
 
+/*
+TODO:
+Win condition check
+Step back
+Surrounding UI
+Transitions?
+*/
 class Field extends React.Component {
     constructor(props) {
         super(props);
@@ -14,7 +21,6 @@ class Field extends React.Component {
         };
     }
 
-
     // Creates a height x width array of squares
     makeMineField(height, width, mineCount) {
         // Could have just done the whole {mine: false, adjMineCount: 0} bity, but wanted to try something newer
@@ -24,6 +30,7 @@ class Field extends React.Component {
             this.adjMineCount = adjMineCount;
             this.x = x;
             this.y = y;
+            this.flagged = false;
             this.hidden = true;
         }
         // Interesting way of creating an array... originally used .fill, but then all indices would reference the same square :/
@@ -70,6 +77,12 @@ class Field extends React.Component {
         return field;
     }
 
+    handleRightClick(x, y) {
+        let copy = this.state.field.slice();
+        copy[y][x].flagged = !copy[y][x].flagged;
+        this.setState({field: copy});
+    }
+
     handleClick(x, y) {
         console.log(x + ", " + y);
         if (this.state.field[y][x].mine)
@@ -80,7 +93,6 @@ class Field extends React.Component {
 
     // Recursive function that reveals squares around (x, y), stopping expansion when the squares have adj mines
     revealRec(x, y, field) {
-        console.log(x + ", " + y);
         // Base Case: end if already revealed
         if (!this.state.field[y][x].hidden)
             return;
@@ -113,6 +125,7 @@ class Field extends React.Component {
                         square={squareEl}
                         shaded={shaded}
                         onClick={(x, y) => this.handleClick(x, y)}
+                        onRightClick={(x, y) => this.handleRightClick(x, y)}
                         key={keyCount++}
                     />
                 );
