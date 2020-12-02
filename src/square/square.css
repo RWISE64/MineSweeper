@@ -8,6 +8,7 @@
     float: left;
     padding: 0;
     font-weight: bold;
+    font-size: 20px;
 }
 
 .row:after {
@@ -30,4 +31,30 @@
 
 .shaded:hover {
     background-color: gray;
+}
+
+.adjMines1 {
+    color: blue;
+}
+
+.adjMines2 {
+    color: green;
+}
+
+.adjMines3 {
+    color: red;
+}
+
+.adjMines4 {
+    color: darkblue;
+}
+
+.adjMines5 {
+    color: darkred;
+}
+
+.mine {
+    color: black;
+    font-size: 40px;
+    background-color: red;
 }
