@@ -1,13 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Field from './field/field'
+import Game from './game/game';
 import './index.css';
 
 ReactDOM.render(
-    <Field 
-        height={10}
-        width={10}
-        mineCount={10}
-    />,
+    <Game />,
     document.getElementById('root')
 )

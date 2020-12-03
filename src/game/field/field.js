@@ -1,13 +1,14 @@
 import React from 'react';
-import Square from '../square/square';
+import Square from './square/square';
 import './field.css';
 
 /*
 TODO:
 Win condition check
-Step back
+General Controls: Step back, height, width, mines
 Surrounding UI
 Transitions?
+Make class applications less terrible
 */
 class Field extends React.Component {
     constructor(props) {
