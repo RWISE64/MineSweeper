@@ -1,5 +1,6 @@
 import React from 'react';
 import Field from './field/field';
+import Controls from './controls/controls';
 import './game.css';
 
 class Game extends React.Component {
@@ -14,13 +15,16 @@ class Game extends React.Component {
 
     render() {
         return (
-            <>
-                <Field 
-                    height={this.state.height}
-                    width={this.state.width}
-                    mineCount={this.state.mineCount}
-                />
-            </>
+            <div className="game-container">
+                <div className="container main-container">
+                    <Field 
+                        height={this.state.height}
+                        width={this.state.width}
+                        mineCount={this.state.mineCount}
+                    />
+                </div>
+                <Controls />
+            </div>
         );
     }
 }

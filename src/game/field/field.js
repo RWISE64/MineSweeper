@@ -2,14 +2,6 @@ import React from 'react';
 import Square from './square/square';
 import './field.css';
 
-/*
-TODO:
-Win condition check
-General Controls: Step back, height, width, mines
-Surrounding UI
-Transitions?
-Make class applications less terrible
-*/
 class Field extends React.Component {
     constructor(props) {
         super(props);
@@ -142,9 +134,9 @@ class Field extends React.Component {
             shaded = !shaded;
         });
         return (
-            <>
+            <div className="field">
                 {field}
-            </>
+            </div>
         );
     }
 }
