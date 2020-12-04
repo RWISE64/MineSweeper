@@ -1,13 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Field from './field/field'
+import Game from './game/game';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faSlidersH } from '@fortawesome/free-solid-svg-icons'
+
 import './index.css';
 
+
+library.add(faSlidersH);
+/*
+TODO:
+Win condition check
+General Controls: Step back, height, width, mines
+Header: Mines left, time, undo
+Surrounding UI
+Transitions?
+Make class applications less terrible
+*/
 ReactDOM.render(
-    <Field 
-        height={10}
-        width={10}
-        mineCount={10}
-    />,
+    <Game />,
     document.getElementById('root')
 )

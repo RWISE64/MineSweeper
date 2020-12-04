@@ -1,0 +1,25 @@
+.container {
+    border: solid var(--border-purple) 1px;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: fit-content;
+    min-width: fit-content;
+    background-color: var(--bg-purple);
+}
+
+.sub-container {
+    background-color: var(--bg-light-purple);
+}
+
+.game-container {
+    display: flex;
+    margin-right: auto;
+    margin-left: auto;
+    width: fit-content;
+}

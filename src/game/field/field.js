@@ -1,14 +1,7 @@
 import React from 'react';
-import Square from '../square/square';
+import Square from './square/square';
 import './field.css';
 
-/*
-TODO:
-Win condition check
-Step back
-Surrounding UI
-Transitions?
-*/
 class Field extends React.Component {
     constructor(props) {
         super(props);
@@ -141,9 +134,9 @@ class Field extends React.Component {
             shaded = !shaded;
         });
         return (
-            <>
+            <div className="field">
                 {field}
-            </>
+            </div>
         );
     }
 }

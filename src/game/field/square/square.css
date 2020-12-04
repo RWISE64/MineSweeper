@@ -17,20 +17,16 @@
     display: table;
 }
 
+.shaded {
+    background-color: lightgray;
+}
+
 .square:focus {
     outline: none;
 }
 
 .square:hover {
     background-color: darkgray;
-}
-
-.shaded {
-    background-color: lightgray;
-}
-
-.shaded:hover {
-    background-color: gray;
 }
 
 .adjMines1 {
