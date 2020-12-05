@@ -14,6 +14,22 @@ class Field extends React.Component {
         };
     }
 
+    componentDidUpdate(prevProps) {
+        // Need to update the field after an update is made to state from parent component
+        // Need to check that height, width, or mineCount actually changed
+        // Prevents infinite loop of recalls due to the state update
+        if (prevProps.height !== this.props.height ||
+            prevProps.width !== this.props.width ||
+            prevProps.mineCount !== this.props.mineCount) {
+            this.setState({
+                height: this.props.height,
+                width: this.props.width,
+                mineCount: this.props.mineCount,
+                field: this.makeMineField(this.props.height, this.props.width, this.props.mineCount),
+            });
+        }
+    }
+
     // Creates a height x width array of squares
     makeMineField(height, width, mineCount) {
         // Could have just done the whole {mine: false, adjMineCount: 0} bity, but wanted to try something newer
@@ -77,7 +93,6 @@ class Field extends React.Component {
     }
 
     handleClick(x, y) {
-        console.log(x + ", " + y);
         if (this.state.field[y][x].mine)
             alert("Oops.");
         if (this.state.field[y][x].hidden)
@@ -130,8 +145,9 @@ class Field extends React.Component {
                 </div>
             );
             row = [];
-            // Reverse shaded at end of row to offset shading of next row
-            shaded = !shaded;
+            // Reverse shaded at end of row to offset shading of next row (only do if width is even)
+            if (rowEl.length % 2 === 0)
+                shaded = !shaded;
         });
         return (
             <div className="field">
