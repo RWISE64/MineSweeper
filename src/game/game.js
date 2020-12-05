@@ -13,6 +13,14 @@ class Game extends React.Component {
         };
     }
 
+    handleSubmit(height, width, mineCount) {
+        this.setState({
+            height: height,
+            width: width,
+            mineCount: mineCount,
+        });
+    }
+
     render() {
         return (
             <div className="game-container">
@@ -23,7 +31,12 @@ class Game extends React.Component {
                         mineCount={this.state.mineCount}
                     />
                 </div>
-                <Controls />
+                <Controls 
+                    handleSubmit={(height, width, mineCount) => this.handleSubmit(height, width, mineCount)}
+                    height={this.state.height}
+                    width={this.state.width}
+                    mineCount={this.state.mineCount}
+                />
             </div>
         );
     }

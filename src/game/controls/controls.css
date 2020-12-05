@@ -38,12 +38,19 @@
 }
 
 .controls > .controls-inputs {
-    border-left: none;
+    border-left: 1px solid var(--bg-light-purple);
     border-radius: 0 0 5px 0;
+    z-index: 0;
+}
+
+.controls-input {
+    display: flex;
+    justify-content: space-between;
+    width: inherit;
 }
 
 .controls-closed {
-    right: 141px;
+    right: 142px;
 }
 
 .controls-closed > .controls-tab {
