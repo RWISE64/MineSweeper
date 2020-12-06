@@ -90,14 +90,20 @@ class Field extends React.Component {
     }
 
     handleRightClick(x, y) {
+        // Starts timer (if not started)
+        this.props.onClick();
         if (!this.state.done) {
             let field = this.state.field;
             field[y][x].flagged = !field[y][x].flagged;
+            // Update remainingFlags
+            this.props.onFlagChange(field[y][x].flagged);
             this.setState({field: field});
         }
     }
 
     handleClick(x, y) {
+        // Starts timer (if not started)
+        this.props.onClick();
         if (!this.state.done) {
             if (this.state.field[y][x].mine) {
                 this.setState({done: true});
@@ -116,7 +122,7 @@ class Field extends React.Component {
     }
 
     checkWin() {
-        if (this.state.remainingSquares == 0) {
+        if (this.state.remainingSquares === 0) {
             this.setState({done: true});
             this.props.onWin();
         }

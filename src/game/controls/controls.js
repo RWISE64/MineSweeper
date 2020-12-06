@@ -39,20 +39,20 @@ class Controls extends React.Component {
     }
 
     handleInputChange(e) {
-        const target = e.target;
-        const value = parseInt(target.value);
+        const name = e.target.name;
+        const value = parseInt(e.target.value);
         this.setState({
-            [target.name]: value
+            [name]: value
         });
         // Update mineCount to be within semi-rational bounds
         // min = just 1 square, max = 20% of all squares
-        if (e.target === 'height' || e.target === 'width') {
-            const squareCount = (e.target === 'height') ? value * this.state.width : this.state.height * value;
+        if (name === 'height' || name === 'width') {
+            const squareCount = (name === 'height') ? value * this.state.width : this.state.height * value;
             const minMines = 1;
             const maxMines = Math.floor(squareCount * .2);
             const mines = Math.max(Math.min(this.state.mineCount, maxMines), minMines);
             this.setState({
-
+                mineCount: mines
             });
         }
     }
@@ -68,23 +68,23 @@ class Controls extends React.Component {
                         label={'Height'}
                         name={'height'}
                         value={this.state.height}
-                        min={5}
-                        max={20}
+                        min={10}
+                        max={25}
                         handleInputChange={this.handleInputChange}
                     />
                     <Input 
                         label={'Width'}
                         name={'width'}
                         value={this.state.width}
-                        min={5}
-                        max={20}
+                        min={10}
+                        max={25}
                         handleInputChange={this.handleInputChange}
                     />
                     <Input 
                         label={'Mines'}
                         name={'mineCount'}
                         value={this.state.mineCount}
-                        min={1}
+                        min={minMines}
                         max={maxMines}
                         handleInputChange={this.handleInputChange}
                     />
