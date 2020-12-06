@@ -2,6 +2,7 @@ import React from 'react';
 import Field from './field/field';
 import Display from './display/display';
 import Controls from './controls/controls';
+import EndBanner from './endBanner/endBanner'
 import './game.css';
 
 class Game extends React.Component {
@@ -14,6 +15,8 @@ class Game extends React.Component {
             remainingFlags: 10,
             started: false,
             time: 0,
+            done: false,
+            result: undefined
         };
     }
 
@@ -25,16 +28,26 @@ class Game extends React.Component {
             mineCount: mineCount,
             remainingFlags: mineCount,
             started: false,
-            time: 0
+            time: 0,
+            done: false,
+            result: undefined
         });
     }
 
     handleWin() {
-        alert("ya won");
+        clearInterval(this.state.timeInterval);
+        this.setState({
+            result: 'win',
+            done: true
+        });
     }
 
     handleLoss() {
-        alert("ha, loser");
+        clearInterval(this.state.timeInterval);
+        this.setState({
+            result: 'loss',
+            done: true
+        });
     }
 
     handleFlagChange(addedFlag) {
@@ -54,22 +67,45 @@ class Game extends React.Component {
         }
     }
 
+    handleRestart() {
+        clearInterval(this.state.timeInterval);
+        this.setState({
+            remainingFlags: this.state.mineCount,
+            started: false,
+            time: 0,
+            done: false,
+            result: undefined
+        });
+    }
+
+    formatTime(time) {
+        const mins = Math.floor(time / 60);
+        const secs = time % 60;
+        return ((mins > 0) ? (mins + ':') : '') + secs;
+    }
+
     render() {
         return (
             <div className="game-container">
                 <div className="container main-container">
                     <Display 
                         remainingFlags={this.state.remainingFlags}
-                        time={this.state.time}
+                        time={this.formatTime(this.state.time)}
                     />
                     <Field 
                         height={this.state.height}
                         width={this.state.width}
                         mineCount={this.state.mineCount}
+                        done={this.state.done}
                         onWin={() => this.handleWin()}
                         onLoss={() => this.handleLoss()}
                         onFlagChange={(addedFlag) => this.handleFlagChange(addedFlag)}
                         onClick={() => this.handleClick()}
+                    />
+                    <EndBanner 
+                        result={this.state.result}
+                        time={this.formatTime(this.state.time)}
+                        onRestart={() => this.handleRestart()}
                     />
                 </div>
                 <Controls 

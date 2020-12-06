@@ -12,16 +12,15 @@ class Field extends React.Component {
             // Creates a height x width array representing the squares of the field
             field: this.makeMineField(props.height, props.width, props.mineCount),
             remainingSquares: (props.height * props.width) - props.mineCount,
-            // Marks whether the game is done, whether through a win or loss
-            done: false,
         };
     }
 
     componentDidUpdate(prevProps) {
-        // Need to update the field after an update is made to state from parent component
+        // Need to update the field after an update is made to state from parent component or restart is called
         // Need to check that height, width, or mineCount actually changed
         // Prevents infinite loop of recalls due to the state update
-        if (prevProps.height !== this.props.height ||
+        if ((this.props.done === false && prevProps.done === true) ||
+            prevProps.height !== this.props.height ||
             prevProps.width !== this.props.width ||
             prevProps.mineCount !== this.props.mineCount) {
             this.setState({
@@ -29,6 +28,7 @@ class Field extends React.Component {
                 width: this.props.width,
                 mineCount: this.props.mineCount,
                 field: this.makeMineField(this.props.height, this.props.width, this.props.mineCount),
+                remainingSquares: (this.props.height * this.props.width) - this.props.mineCount,
             });
         }
     }
@@ -92,7 +92,7 @@ class Field extends React.Component {
     handleRightClick(x, y) {
         // Starts timer (if not started)
         this.props.onClick();
-        if (!this.state.done) {
+        if (!this.props.done) {
             let field = this.state.field;
             field[y][x].flagged = !field[y][x].flagged;
             // Update remainingFlags
@@ -104,11 +104,9 @@ class Field extends React.Component {
     handleClick(x, y) {
         // Starts timer (if not started)
         this.props.onClick();
-        if (!this.state.done) {
-            if (this.state.field[y][x].mine) {
-                this.setState({done: true});
+        if (!this.props.done) {
+            if (this.state.field[y][x].mine)
                 this.props.onLoss();
-            }
             if (this.state.field[y][x].hidden) {
                 // Update field, then count the remaining hidden squares
                 // Inefficient - could have updated remainingSquares within revealRec, but recursion made it a bit difficult
@@ -122,10 +120,8 @@ class Field extends React.Component {
     }
 
     checkWin() {
-        if (this.state.remainingSquares === 0) {
-            this.setState({done: true});
+        if (this.state.remainingSquares === 0) 
             this.props.onWin();
-        }
     }
 
     // Returns the number of non-mine squares that need to be revealed

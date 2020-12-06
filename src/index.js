@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Game from './game/game';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSlidersH, faFlag, faStopwatch } from '@fortawesome/free-solid-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { faSlidersH, faFlag, faStopwatch, faDizzy } from '@fortawesome/free-solid-svg-icons'
 
 import './index.css';
 
 
-library.add(faSlidersH, faFlag, faStopwatch);
+library.add(fab, faSlidersH, faFlag, faStopwatch, faDizzy);
 /*
 TODO:
 Header: Mines left, time
