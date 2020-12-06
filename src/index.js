@@ -2,19 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Game from './game/game';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSlidersH } from '@fortawesome/free-solid-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { faSlidersH, faFlag, faStopwatch, faDizzy, faChevronRight, faRedo } from '@fortawesome/free-solid-svg-icons'
 
 import './index.css';
 
 
-library.add(faSlidersH);
+library.add(fab, faSlidersH, faFlag, faStopwatch, faDizzy, faChevronRight, faRedo);
 /*
 TODO:
-Win condition check
-General Controls: Step back, height, width, mines
-Header: Mines left, time, undo
-Surrounding UI
-Transitions?
 Make class applications less terrible
 */
 ReactDOM.render(

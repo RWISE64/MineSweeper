@@ -11,14 +11,16 @@ class Field extends React.Component {
             mineCount: props.mineCount,
             // Creates a height x width array representing the squares of the field
             field: this.makeMineField(props.height, props.width, props.mineCount),
+            remainingSquares: (props.height * props.width) - props.mineCount,
         };
     }
 
     componentDidUpdate(prevProps) {
-        // Need to update the field after an update is made to state from parent component
+        // Need to update the field after an update is made to state from parent component or restart is called
         // Need to check that height, width, or mineCount actually changed
         // Prevents infinite loop of recalls due to the state update
-        if (prevProps.height !== this.props.height ||
+        if ((this.props.done === false && prevProps.done === true) ||
+            prevProps.height !== this.props.height ||
             prevProps.width !== this.props.width ||
             prevProps.mineCount !== this.props.mineCount) {
             this.setState({
@@ -26,6 +28,7 @@ class Field extends React.Component {
                 width: this.props.width,
                 mineCount: this.props.mineCount,
                 field: this.makeMineField(this.props.height, this.props.width, this.props.mineCount),
+                remainingSquares: (this.props.height * this.props.width) - this.props.mineCount,
             });
         }
     }
@@ -87,16 +90,50 @@ class Field extends React.Component {
     }
 
     handleRightClick(x, y) {
-        let copy = this.state.field.slice();
-        copy[y][x].flagged = !copy[y][x].flagged;
-        this.setState({field: copy});
+        // Starts timer (if not started)
+        this.props.onClick();
+        if (!this.props.done) {
+            let field = this.state.field;
+            field[y][x].flagged = !field[y][x].flagged;
+            // Update remainingFlags
+            this.props.onFlagChange(field[y][x].flagged);
+            this.setState({field: field});
+        }
     }
 
     handleClick(x, y) {
-        if (this.state.field[y][x].mine)
-            alert("Oops.");
-        if (this.state.field[y][x].hidden)
-            this.setState({field: this.revealRec(x, y, this.state.field)});
+        // Starts timer (if not started)
+        this.props.onClick();
+        if (!this.props.done) {
+            if (this.state.field[y][x].mine)
+                this.props.onLoss();
+            if (this.state.field[y][x].hidden) {
+                // Update field, then count the remaining hidden squares
+                // Inefficient - could have updated remainingSquares within revealRec, but recursion made it a bit difficult
+                this.setState({field: this.revealRec(x, y, this.state.field)}, () => {
+                    this.setState({remainingSquares: this.getRemainingSquares()}, () => {
+                        this.checkWin();
+                    });
+                });
+            }
+        }
+    }
+
+    checkWin() {
+        if (this.state.remainingSquares === 0) 
+            this.props.onWin();
+    }
+
+    // Returns the number of non-mine squares that need to be revealed
+    getRemainingSquares() {
+        let remainingSquares = 0;
+        this.state.field.forEach(rowEl => {
+            rowEl.forEach(squareEl => {
+                if (squareEl.hidden && !squareEl.mine)
+                    remainingSquares++;
+            });
+        });
+        return remainingSquares;
     }
 
     // Recursive function that reveals squares around (x, y), stopping expansion when the squares have adj mines
@@ -117,7 +154,7 @@ class Field extends React.Component {
                 }
             }
         }
-        return field
+        return field;
     }
 
     render() {

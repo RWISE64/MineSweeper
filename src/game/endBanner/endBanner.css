@@ -1,0 +1,34 @@
+.banner {
+    transition: opacity .5s;
+    position: absolute;
+    display: flex;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(100, 100, 100, .4);
+    padding: 20px;
+}
+
+.banner > .container {
+    height: 85px;
+    /* More golden rectangle shenanigans */
+    width: calc(120px * 1.618);
+    text-align: center;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.banner-time > *,
+.banner-result > * {
+    margin: 0 5px;
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}

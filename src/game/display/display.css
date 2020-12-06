@@ -1,0 +1,15 @@
+.display {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-around;
+    font-size: 20px;
+}
+
+.display > span {
+    width: 60px;
+    text-align: center;
+}
+
+.display > span > *:first-child {
+    margin-right: 5px;
+}

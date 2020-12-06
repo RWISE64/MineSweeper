@@ -11,6 +11,7 @@
     width: fit-content;
     min-width: fit-content;
     background-color: var(--bg-purple);
+    position: relative;
     z-index: 2;
 }
 
