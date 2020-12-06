@@ -11,8 +11,8 @@ library.add(faSlidersH);
 /*
 TODO:
 Win condition check
-General Controls: Step back, height, width, mines
-Header: Mines left, time, undo
+- Uncover all non-mine squares, flags don't matter
+Header: Mines left, time
 Surrounding UI
 Transitions?
 Make class applications less terrible

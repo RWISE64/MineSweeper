@@ -11,6 +11,9 @@ class Field extends React.Component {
             mineCount: props.mineCount,
             // Creates a height x width array representing the squares of the field
             field: this.makeMineField(props.height, props.width, props.mineCount),
+            remainingSquares: (props.height * props.width) - props.mineCount,
+            // Marks whether the game is done, whether through a win or loss
+            done: false,
         };
     }
 
@@ -87,16 +90,48 @@ class Field extends React.Component {
     }
 
     handleRightClick(x, y) {
-        let copy = this.state.field.slice();
-        copy[y][x].flagged = !copy[y][x].flagged;
-        this.setState({field: copy});
+        if (!this.state.done) {
+            let field = this.state.field;
+            field[y][x].flagged = !field[y][x].flagged;
+            this.setState({field: field});
+        }
     }
 
     handleClick(x, y) {
-        if (this.state.field[y][x].mine)
-            alert("Oops.");
-        if (this.state.field[y][x].hidden)
-            this.setState({field: this.revealRec(x, y, this.state.field)});
+        if (!this.state.done) {
+            if (this.state.field[y][x].mine) {
+                this.setState({done: true});
+                this.props.onLoss();
+            }
+            if (this.state.field[y][x].hidden) {
+                // Update field, then count the remaining hidden squares
+                // Inefficient - could have updated remainingSquares within revealRec, but recursion made it a bit difficult
+                this.setState({field: this.revealRec(x, y, this.state.field)}, () => {
+                    this.setState({remainingSquares: this.getRemainingSquares()}, () => {
+                        this.checkWin();
+                    });
+                });
+            }
+        }
+    }
+
+    checkWin() {
+        if (this.state.remainingSquares == 0) {
+            this.setState({done: true});
+            this.props.onWin();
+        }
+    }
+
+    // Returns the number of non-mine squares that need to be revealed
+    getRemainingSquares() {
+        let remainingSquares = 0;
+        this.state.field.forEach(rowEl => {
+            rowEl.forEach(squareEl => {
+                if (squareEl.hidden && !squareEl.mine)
+                    remainingSquares++;
+            });
+        });
+        return remainingSquares;
     }
 
     // Recursive function that reveals squares around (x, y), stopping expansion when the squares have adj mines
@@ -117,7 +152,7 @@ class Field extends React.Component {
                 }
             }
         }
-        return field
+        return field;
     }
 
     render() {
