@@ -1,4 +1,5 @@
 .banner {
+    transition: opacity .5s;
     position: absolute;
     display: flex;
     top: 0;
@@ -28,5 +29,6 @@
 }
 
 .hidden {
+    opacity: 0;
     visibility: hidden;
 }

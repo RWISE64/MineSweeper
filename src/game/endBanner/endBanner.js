@@ -4,7 +4,7 @@ import './endBanner.css';
 
 class EndBanner extends React.Component {
     render() {
-        const faIcon = (this.props.result === 'win') ? 'angellist' : 'dizzy';
+        const faIcon = (this.props.result === 'win') ? ['fab', 'angellist'] : 'dizzy';
         const hidden = this.props.result === undefined ? ' hidden' : '';
         return (
             <div className={'banner' + hidden}>

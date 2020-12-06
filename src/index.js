@@ -11,11 +11,10 @@ import './index.css';
 library.add(fab, faSlidersH, faFlag, faStopwatch, faDizzy);
 /*
 TODO:
-Header: Mines left, time
-Surrounding UI
 Transitions?
 Make class applications less terrible
 fix slide bug on odd square width
+button styles
 */
 ReactDOM.render(
     <Game />,
