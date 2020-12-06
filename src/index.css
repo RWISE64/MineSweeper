@@ -3,3 +3,31 @@
     --bg-purple: #7400f6;
     --bg-light-purple: #b894f4;
 }
+
+.button {
+    transition: background .5s ease;
+    border: 1px solid var(--border-purple);
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background-color: white;
+    color: var(--border-purple);
+    padding: 5px;
+}
+
+.button > * {
+    margin-left: 5px;
+}
+
+.button:hover {
+    background-color: lightgray;
+}
+
+.button:active {
+    transition: none;
+    background-color: darkgray;
+}
+
+.button:focus {
+    outline: none;
+}

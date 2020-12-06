@@ -11,7 +11,7 @@
 }
 
 .banner > .container {
-    height: 75px;
+    height: 85px;
     /* More golden rectangle shenanigans */
     width: calc(120px * 1.618);
     text-align: center;

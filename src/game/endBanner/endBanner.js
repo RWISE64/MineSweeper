@@ -19,7 +19,13 @@ class EndBanner extends React.Component {
                         <span>{this.props.time}</span>
                     </div>
                     <div>
-                        <button onClick={() => this.props.onRestart()}>Restart</button>
+                        <button 
+                            onClick={() => this.props.onRestart()}
+                            className={'button'}
+                        >
+                            Restart
+                            <FontAwesomeIcon icon={'redo'} />
+                        </button>
                     </div>
                 </div>
             </div>

@@ -90,8 +90,10 @@ class Controls extends React.Component {
                     />
                     <button
                         onClick={() => this.props.handleSubmit(this.state.height, this.state.width, this.state.mineCount)}
+                        className={'button'}
                     >
                         Apply
+                        <FontAwesomeIcon icon="chevron-right" />
                     </button>
                 </div>
                 <div 

@@ -2,21 +2,29 @@ import React from 'react';
 import './square.css';
 
 class Square extends React.Component {
-    render() {
-        let square = this.props.square;
-        let classes = (this.props.shaded) ? ' shaded' : '';
+    getClasses(shaded, square) {
+        let classes = (shaded) ? ' shaded' : '';
         classes += (square.mine && !square.hidden && !square.flagged) ? ' mine' : '';
         classes += (!square.hidden && !square.flagged) ? ' adjMines' + square.adjMineCount : '';
         classes += (square.flagged) ? ' flagged' : '';
-        let content;
+        return classes
+    }
+
+    getContent(square) {
         if (square.flagged)
-            content = '!';
+            return '!';
         else if (square.hidden)
-            content = null;
+            return null;
         else if (square.mine)
-            content = '*'
+            return '*';
         else
-            content = square.adjMineCount;
+            return square.adjMineCount;
+    }
+
+    render() {
+        const square = this.props.square;
+        const classes = this.getClasses(this.props.shaded, square);
+        const content = this.getContent(square);
         return (
             <button
                 className={'square' + classes}
